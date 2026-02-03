@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Calendar, Clock } from "lucide-react";
 import { useLanguage } from "@/contexts/language-context";
+import { EventsCalendar } from "@/components/events-calendar";
 import type { BlogPost } from "@prisma/client";
 
 interface BlogClientProps {
@@ -45,6 +46,7 @@ export function BlogClient({ posts }: BlogClientProps) {
                   src={post?.image ?? ""}
                   alt={post?.title ?? "Blog post"}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover hover:scale-105 transition-transform duration-300"
                 />
               </div>
@@ -79,6 +81,9 @@ export function BlogClient({ posts }: BlogClientProps) {
           </motion.article>
         ))}
       </div>
+
+      {/* Events Calendar */}
+      <EventsCalendar />
     </div>
   );
 }

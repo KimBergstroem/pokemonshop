@@ -86,12 +86,37 @@ const config: Config = {
           from: { transform: 'translateY(0)' },
           to: { transform: 'translateY(calc(-100% - var(--gap)))' },
         },
+        'about-fade-up': {
+          from: { opacity: '0', transform: 'translateY(20px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
+        },
+        'about-fade': {
+          from: { opacity: '0' },
+          to: { opacity: '1' },
+        },
+        'about-scale-in': {
+          from: { opacity: '0', transform: 'scale(0.95)' },
+          to: { opacity: '1', transform: 'scale(1)' },
+        },
+        'about-slide-left': {
+          from: { opacity: '0', transform: 'translateX(-20px)' },
+          to: { opacity: '1', transform: 'translateX(0)' },
+        },
+        'about-slide-right': {
+          from: { opacity: '0', transform: 'translateX(20px)' },
+          to: { opacity: '1', transform: 'translateX(0)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         marquee: 'marquee var(--duration) linear infinite',
         'marquee-vertical': 'marquee-vertical var(--duration) linear infinite',
+        'about-fade-up': 'about-fade-up 0.6s ease-out both',
+        'about-fade': 'about-fade 0.6s ease-out both',
+        'about-scale-in': 'about-scale-in 0.6s ease-out both',
+        'about-slide-left': 'about-slide-left 0.6s ease-out both',
+        'about-slide-right': 'about-slide-right 0.6s ease-out both',
       },
     },
   },

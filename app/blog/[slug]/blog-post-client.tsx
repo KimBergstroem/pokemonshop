@@ -48,6 +48,7 @@ export function BlogPostClient({ post }: BlogPostClientProps) {
             src={post?.image ?? ''}
             alt={post?.title ?? 'Blog post'}
             fill
+            sizes="(max-width: 768px) 100vw, 896px"
             className="object-cover"
           />
         </div>
@@ -79,9 +80,31 @@ export function BlogPostClient({ post }: BlogPostClientProps) {
         </div>
 
         {/* Content */}
-        <div className="prose prose-lg dark:prose-invert max-w-none">
-          <div dangerouslySetInnerHTML={{ __html: post?.content ?? '' }} />
-        </div>
+        <article className="prose prose-lg dark:prose-invert max-w-none
+          prose-headings:font-heading prose-headings:font-bold prose-headings:text-foreground
+          prose-h2:text-3xl prose-h2:mt-16 prose-h2:mb-8 prose-h2:leading-tight prose-h2:border-b prose-h2:border-border prose-h2:pb-4
+          prose-h3:text-2xl prose-h3:mt-10 prose-h3:mb-6 prose-h3:leading-tight
+          prose-p:text-base prose-p:leading-8 prose-p:mb-8 prose-p:text-left
+          prose-ul:my-8 prose-ul:space-y-4 prose-ul:pl-6
+          prose-ol:my-8 prose-ol:space-y-4 prose-ol:pl-6
+          prose-li:text-base prose-li:leading-8 prose-li:my-3
+          prose-strong:text-foreground prose-strong:font-semibold
+          [&>*:first-child]:mt-0
+          [&_p]:text-left
+          [&_h2]:text-left
+          [&_h3]:text-left
+          [&_p+_p]:mt-8
+          [&_h2+_p]:mt-8">
+          <div 
+            className="[&>p]:mb-8 [&>p]:leading-8
+                       [&>h2]:mt-16 [&>h2]:mb-8 [&>h2]:pt-4
+                       [&>h3]:mt-10 [&>h3]:mb-6
+                       [&>ul]:my-8 [&>ul]:space-y-4
+                       [&>ol]:my-8 [&>ol]:space-y-4
+                       [&>li]:my-3 [&>li]:leading-8"
+            dangerouslySetInnerHTML={{ __html: post?.content ?? '' }} 
+          />
+        </article>
       </motion.div>
     </div>
   )

@@ -95,6 +95,7 @@ export function OrdersClient({ orders }: OrdersClientProps) {
                         src={item?.product?.image ?? ''}
                         alt={item?.product?.name ?? 'Product'}
                         fill
+                        sizes="64px"
                         className="object-cover"
                       />
                     </div>

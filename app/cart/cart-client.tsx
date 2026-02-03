@@ -49,7 +49,7 @@ export function CartClient() {
           <h1 className="text-3xl font-heading font-bold">{t.cart.empty}</h1>
           <p className="text-muted-foreground">{t.cart.emptyDescription}</p>
           <Link href="/marketplace">
-            <Button size="lg">{t.cart.continueShopping}</Button>
+            <Button size="lg" className="mt-4">{t.cart.continueShopping}</Button>
           </Link>
         </div>
       </div>
@@ -82,6 +82,7 @@ export function CartClient() {
                     src={item?.product?.image ?? ''}
                     alt={item?.product?.name ?? 'Product'}
                     fill
+                    sizes="96px"
                     className="object-cover"
                   />
                 </div>

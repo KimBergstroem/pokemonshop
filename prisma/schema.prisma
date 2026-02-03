@@ -1,5 +1,6 @@
 generator client {
-    provider = "prisma-client-js"
+    provider      = "prisma-client-js"
+    output        = "../node_modules/.prisma/client"
     binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
 }
 
@@ -71,6 +72,7 @@ model Product {
   rarity      String?
   set         String?
   condition   String?
+  language    String?
   image       String
   stock       Int            @default(0)
   featured    Boolean        @default(false)
@@ -135,5 +137,23 @@ model ContactSubmission {
   email     String
   message   String   @db.Text
   status    String   @default("new")
+  createdAt DateTime @default(now())
+}
+
+model Chat {
+  id        String    @id @default(cuid())
+  userId    String?
+  title     String?
+  messages  Message[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  chatId    String
+  chat      Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  role      String   // 'user' | 'assistant' | 'system'
+  content   String   @db.Text
   createdAt DateTime @default(now())
 }

@@ -133,14 +133,14 @@ export function ContactClient() {
                   className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition-colors"
                 >
                   <Mail className="w-5 h-5 text-primary" />
-                  <span>contact@pokemonbarcelona.com</span>
+                  <span>contact@akknerds.com</span>
                 </a>
                 <div className="flex items-center gap-3 p-3 rounded-lg">
                   <Instagram className="w-5 h-5 text-primary" />
-                  <span>@pokemonbarcelona</span>
+                  <span>@akknerds.com</span>
                 </div>
                 <a
-                  href="https://discord.gg/pokemonbarcelona"
+                  href="https://discord.gg/uH43WkCFyP"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition-colors"

@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server'
 import prisma from '@/lib/db'
 
-export const dynamic = 'force-dynamic'
+// Enable caching: revalidate every 60 seconds
+export const revalidate = 60
 
 export async function GET() {
   try {
@@ -10,7 +11,12 @@ export async function GET() {
       orderBy: { createdAt: 'desc' },
     })
 
-    return NextResponse.json(posts)
+    return NextResponse.json(posts, {
+      headers: {
+        // Cache-Control headers for HTTP caching
+        'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=120',
+      },
+    })
   } catch (error) {
     console.error('Error fetching blog posts:', error)
     return NextResponse.json(

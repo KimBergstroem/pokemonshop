@@ -24,19 +24,43 @@ export function MarketplaceClient({ products }: MarketplaceClientProps) {
       filtered = filtered.filter(p => p?.category === filters.category)
     }
 
-    // Type filter
+    // Type filter (supports multiple types)
     if (filters.type && filters.type !== 'all') {
-      filtered = filtered.filter(p => p?.type === filters.type)
+      // If type is an array (from multiple quick filter selection)
+      if (Array.isArray(filters.type)) {
+        filtered = filtered.filter(p => 
+          filters.type.some((selectedType: string) => 
+            p?.type?.toLowerCase() === selectedType.toLowerCase()
+          )
+        )
+      } else {
+        // Single type filter (from dropdown)
+        filtered = filtered.filter(p => p?.type?.toLowerCase() === filters.type?.toLowerCase())
+      }
     }
 
     // Rarity filter
     if (filters.rarity && filters.rarity !== 'all') {
-      filtered = filtered.filter(p => p?.rarity === filters.rarity)
+      filtered = filtered.filter(p => {
+        const productRarity = p?.rarity?.toLowerCase().trim()
+        const filterRarity = filters.rarity?.toLowerCase().trim()
+        return productRarity === filterRarity
+      })
     }
 
     // Condition filter
     if (filters.condition && filters.condition !== 'all') {
       filtered = filtered.filter(p => p?.condition === filters.condition)
+    }
+
+    // Printed In (Set) filter
+    if (filters.printedIn && filters.printedIn !== 'all') {
+      filtered = filtered.filter(p => p?.set?.toLowerCase() === filters.printedIn?.toLowerCase())
+    }
+
+    // Language filter
+    if (filters.language && filters.language !== 'all') {
+      filtered = filtered.filter(p => p?.language?.toLowerCase() === filters.language?.toLowerCase())
     }
 
     // Price range filter
@@ -54,6 +78,27 @@ export function MarketplaceClient({ products }: MarketplaceClientProps) {
           p?.name?.toLowerCase()?.includes(searchLower) ||
           p?.description?.toLowerCase()?.includes(searchLower)
       )
+    }
+
+    // Sort products
+    if (filters.sortBy) {
+      switch (filters.sortBy) {
+        case 'price-low':
+          filtered.sort((a, b) => (a?.price ?? 0) - (b?.price ?? 0))
+          break
+        case 'price-high':
+          filtered.sort((a, b) => (b?.price ?? 0) - (a?.price ?? 0))
+          break
+        case 'name-asc':
+          filtered.sort((a, b) => (a?.name ?? '').localeCompare(b?.name ?? ''))
+          break
+        case 'name-desc':
+          filtered.sort((a, b) => (b?.name ?? '').localeCompare(a?.name ?? ''))
+          break
+        default:
+          // Keep original order
+          break
+      }
     }
 
     setFilteredProducts(filtered)
@@ -78,23 +123,23 @@ export function MarketplaceClient({ products }: MarketplaceClientProps) {
       </motion.div>
 
       {/* Filters */}
-      <MarketplaceFilters onFilterChange={handleFilterChange} />
+      <MarketplaceFilters onFilterChange={handleFilterChange} totalProducts={products.length} />
 
       {/* Products Grid */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.6 }}
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 mt-8"
+        className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 sm:gap-3 mt-8"
       >
         {filteredProducts?.map((product, index) => (
           <motion.div
             key={product?.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.05, duration: 0.4 }}
+            transition={{ delay: Math.min(index * 0.02, 0.5), duration: 0.3 }}
           >
-            <ProductCard product={product} />
+            <ProductCard product={product} index={index} />
           </motion.div>
         ))}
       </motion.div>
